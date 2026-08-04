@@ -1,7 +1,11 @@
 entries:
   - title: links
     entries:
-      - title: github
+      - title: Instagram
+        url: https://instagram.com/_ethesthete
+      - title: SoundCloud
+        url: https://soundcloud.com/alchimestre
+      - title: GitHub
         url: https://github.com/alchimestre
 
   - title: all posts

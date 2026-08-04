@@ -4,8 +4,6 @@ title: "Signed Git on macOS with Secretive"
 date: 2026-08-04
 ---
 
-# Signed Git on macOS with Secretive
-
 Set up SSH auth + git commit/tag signing backed by the Mac's Secure Enclave. Keys never leave the enclave; commits show as **Verified** on GitHub.
 
 ## 1. Install Secretive
