@@ -8,8 +8,11 @@ Set up SSH auth + git commit/tag signing backed by the Mac's Secure Enclave. Key
 
 ## 1. Install Secretive
 
-- From the App Store or [github.com/maxgoedjen/secretive](https://github.com/maxgoedjen/secretive).
-- Launch it once. It starts the agent; the socket lives at:
+```
+brew install secretive
+```
+
+Launch it once. It starts the agent; the socket lives at:
   `~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh`
 
 ## 2. Create a key
