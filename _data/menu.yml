@@ -1,0 +1,13 @@
+entries:
+  - title: links
+    entries:
+      - title: github
+        url: https://github.com/alchimestre
+      - title: email
+        url: mailto:vincentloupmon+git@protonmail.com
+
+  - title: all posts
+    post_list: true
+
+  - title: rss
+    url: feed.xml

@@ -2,4 +2,24 @@ title: Alchimestre
 email: vincentloupmon+git@protonmail.com
 description: >-
   Notes from Alchimestre - Secure Enclave, git signing, and other engineering notes.
-theme: minima
+
+permalink: /:slug.html
+
+remote_theme: riggraz/no-style-please
+
+# The theme's _config.yml lists the jektex plugin (not on GitHub Pages);
+# we replicate its settings here instead.
+ignore_theme_config: true
+
+theme_config:
+  appearance: "dark"
+  show_description: true
+  date_format: "%Y-%m-%d"
+
+sass:
+  style: compressed
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-feed
+  - jekyll-seo-tag
