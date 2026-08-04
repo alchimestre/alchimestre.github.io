@@ -47,8 +47,11 @@ Host *
 
 ## 5. GitHub
 
-1. Settings → **SSH and GPG keys** → **New SSH key**. Paste the `.pub` file contents. An uploaded SSH key covers both authentication and commit signing.
-2. Make sure `user.email` in git matches a verified email on your GitHub account (required for the **Verified** badge).
+1. Settings → **SSH and GPG keys** → **New SSH key** → **Key type: Signing Key**. Paste the `.pub` file contents.
+   Authentication keys and signing keys are separate on GitHub: an authentication-only key does **not** verify commits. Register the key as a **Signing Key** (the same key can be uploaded twice, once per type).
+2. The commit's **committer email** must be a verified email on your account (Settings → **Emails**). Without it, GitHub shows **Unverified** even with a valid signature.
+   - Verify through the GitHub **web UI** — emails added via the API are registered but GitHub sends no verification email, so the link never arrives.
+   - `user.email` in git must match exactly, including `+alias` suffixes.
 3. Test: `ssh -T git@github.com`
 
 ## 6. Git config (`~/.gitconfig`)
@@ -93,6 +96,8 @@ Then verify locally:
 git log --show-signature -1     # expect: Good "git" signature …
 ```
 
+This is local-only: `allowedSignersFile` is your machine's allowlist. GitHub does not read it — it checks its own key registry and your verified email (step 5). If you rotate keys, keep both lines in this file so old commits still verify locally.
+
 ## 8. Verify end to end
 
 ```sh
@@ -101,12 +106,27 @@ git show --show-signature HEAD  # Good "git" signature with <key>
 git push                        # GitHub shows the commit as Verified
 ```
 
+## 9. Skip repeated Touch ID prompts (time-based unlock)
+
+Out of the box, every sign asks for Touch ID. Secretive can keep a key unlocked for a set window after one authentication:
+
+When a signing request triggers the Touch ID prompt, Secretive also posts a notification. Click it and pick a duration:
+
+- **Don't persist** · **1 minute** · **5 minutes** · **1 hour** · **24 hours**
+
+Authenticate once with Touch ID, and every sign within that window reuses the authorization — no fingerprint. The timer is per-key and monotonic (clock-change safe); it expires on its own, and restarting the agent clears it.
+
+Requires Secretive ≥ 2.2.0 (enabled since, works on 3.0.4).
+
 ## Troubleshooting
 
 | Symptom | Cause / fix |
 |---|---|
-| `error: No private key found for public key "…/PublicKeys/….pub"` | `$SSH_AUTH_SOCK` points at the launchd agent (`/var/run/com.apple.launchd.*/Listeners`), not Secretive. Fix: export it in `~/.zshrc` (step 3) and **open a new terminal**. GUI apps need `launchctl setenv`. |
+| `error: No private key found for public key "…/PublicKeys/….pub"` | `$SSH_AUTH_SOCK` points at the launchd agent (`/var/run/com.apple.launchd.*/Listeners`), not Secretive. Fix: export it in `~/.zshrc` (step 3) and **open a new terminal**. GUI apps need `launchctl setenv`; non-interactive shells (cron, IDE daemons, a crashed terminal session) never source `~/.zshrc` — set it there too. Diagnose: `echo $SSH_AUTH_SOCK`, `ssh-add -L`. |
 | `error: gpg.ssh.allowedSignersFile needs to be configured and exist` | Create `~/.gitallowedsigners` (step 7). |
-| Commit signed but not **Verified** on GitHub | `user.email` doesn't match a verified GitHub email, or the public key isn't uploaded (step 5). |
+| Commit signed but not **Verified** on GitHub | Check in order: (1) key registered as **Signing Key**, not just authentication (step 5); (2) committer email verified on GitHub via the web UI (step 5); (3) GitHub reports `no_user`. |
+| GitHub shows `unverified_email` | Signature checks out; the committer email isn't verified on the account — Settings → **Emails** → verify through the web UI. |
+| GitHub shows `no_user` for an old commit | The signing key wasn't on your GitHub account when the commit was pushed; GitHub caches verification at push time. Re-pushing the commit (amend/rebase + re-sign + force-push) re-verifies it. |
+| Local `git log --show-signature` says `Good` but GitHub says unverified | `allowedSignersFile` is local-only. GitHub uses its own registry + verified-email check (step 5) — the two verifications are independent. |
 | `ssh: connect to host github.com port 22: Operation timed out` | Port 22 blocked — use SSH over HTTPS (443) or the GitHub CLI: `gh ssh-key add …`. |
 | Signing works in the terminal but not in an editor/IDE | The app was started before `launchctl setenv`; restart it, or run it from the terminal. |
