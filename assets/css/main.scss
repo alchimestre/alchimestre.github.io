@@ -1,0 +1,58 @@
+---
+---
+
+@import "no-style-please";
+
+/* One Dark palette override: replaces the theme's invert-based dark mode. */
+body[a="dark"] {
+  filter: none;
+  background-color: #282c34;
+  color: #abb2bf;
+}
+
+html:has(body[a="dark"]) {
+  background-color: #282c34;
+}
+
+body[a="dark"] img,
+body[a="dark"] img.ioda,
+body[a="dark"] .emoji,
+body[a="dark"] iframe {
+  filter: none;
+}
+
+body[a="dark"] a {
+  color: #61afef;
+}
+
+body[a="dark"] h1,
+body[a="dark"] h2,
+body[a="dark"] h3,
+body[a="dark"] h4,
+body[a="dark"] h5,
+body[a="dark"] h6 {
+  color: #e6e6e6;
+}
+
+body[a="dark"] *:target {
+  background-color: #e5c07b;
+  color: #282c34;
+}
+
+body[a="dark"] hr {
+  border-color: #3e4451;
+}
+
+body[a="dark"] .post-meta {
+  color: #5c6370;
+}
+
+body[a="dark"] pre,
+body[a="dark"] code {
+  background-color: #21252b;
+}
+
+body[a="dark"] ::selection {
+  background-color: #3e4451;
+  color: #abb2bf;
+}
