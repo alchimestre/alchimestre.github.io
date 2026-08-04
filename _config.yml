@@ -4,6 +4,9 @@ description: >-
 
 permalink: /:slug.html
 
+paginate: 5
+paginate_path: "/page:num/"
+
 remote_theme: riggraz/no-style-please
 
 # The theme's _config.yml lists the jektex plugin (not on GitHub Pages);
@@ -14,6 +17,7 @@ theme_config:
   appearance: "dark"
   show_description: true
   date_format: "%Y-%m-%d"
+  back_home_text: "← index"
 
 sass:
   style: compressed
@@ -22,3 +26,4 @@ plugins:
   - jekyll-remote-theme
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-paginate

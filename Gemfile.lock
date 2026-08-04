@@ -82,6 +82,7 @@ GEM
       webrick (~> 1.7)
     jekyll-feed (0.17.0)
       jekyll (>= 3.7, < 5.0)
+    jekyll-paginate (1.1.0)
     jekyll-remote-theme (0.5.2)
       addressable (~> 2.0)
       jekyll (>= 3.5, < 5.0)
@@ -176,10 +177,11 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  jektex
-  jekyll
+  jektex (~> 0.2.0)
+  jekyll (~> 4.4)
   jekyll-feed
-  jekyll-remote-theme
+  jekyll-paginate
+  jekyll-remote-theme (~> 0.5)
   jekyll-seo-tag
 
 BUNDLED WITH

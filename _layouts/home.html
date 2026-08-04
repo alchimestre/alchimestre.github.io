@@ -1,0 +1,73 @@
+---
+layout: default
+---
+<header>
+  <h1>{{ site.title }}</h1>
+  {%- if site.theme_config.show_description -%}
+    <p>{{ site.description }}</p>
+  {%- endif -%}
+</header>
+
+<div class="home-grid">
+  <nav class="home-col home-links" aria-label="Links">
+    {%- for item in site.data.menu.entries -%}
+      {%- if item.entries -%}
+        <h2>{{ item.title }}</h2>
+        <ul>
+          {%- for link in item.entries -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    {%- endfor -%}
+    {%- for item in site.data.menu.entries -%}
+      {%- if item.url -%}
+        <a class="rss-link" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {%- endif -%}
+    {%- endfor -%}
+  </nav>
+
+  <section class="home-col home-posts" aria-label="Recent posts">
+    <h2>recent posts</h2>
+    <ul class="post-list">
+      {%- for post in paginator.posts -%}
+        <li>
+          <span class="post-date">{{ post.date | date: site.theme_config.date_format }}</span>
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if paginator.total_pages > 1 -%}
+      <nav class="pagination" aria-label="Pagination">
+        {%- if paginator.previous_page -%}
+          <a class="pagination-prev" href="{{ paginator.previous_page_path | relative_url }}">← newer</a>
+        {%- endif -%}
+        <span class="pagination-info">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+        {%- if paginator.next_page -%}
+          <a class="pagination-next" href="{{ paginator.next_page_path | relative_url }}">older →</a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+  </section>
+
+  <nav class="home-col home-archive" aria-label="All posts">
+    {%- for item in site.data.menu.entries -%}
+      {%- if item.post_list -%}
+        <h2>{{ item.title }}</h2>
+        <ul>
+          {%- assign archive_posts = site.posts -%}
+          {%- if item.post_list.limit and archive_posts.size > item.post_list.limit -%}
+            {%- assign archive_posts = archive_posts | limit: item.post_list.limit -%}
+          {%- endif -%}
+          {%- for post in archive_posts -%}
+            <li>
+              <span class="post-date">{{ post.date | date: site.theme_config.date_format }}</span>
+              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    {%- endfor -%}
+  </nav>
+</div>

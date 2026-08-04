@@ -3,6 +3,83 @@
 
 @import "no-style-please";
 
+/* Wider frame: the theme's .w caps at 640px; posts and the index grid need more room. */
+.w {
+  max-width: 1100px;
+  padding: 3rem 2rem;
+}
+
+/* ---- Index: 3-column layout (links | recent posts | all posts) ---- */
+.home-grid {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 240px;
+  gap: 3rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+
+.home-col h2 {
+  margin-top: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.home-links h2 {
+  margin-bottom: 0.5rem;
+}
+
+.home-links ul {
+  margin-top: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.home-links .rss-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+}
+
+.home-posts {
+  border-left: thin solid #3e4451;
+  border-right: thin solid #3e4451;
+  padding: 0 2rem;
+}
+
+.home-archive ul,
+.home-posts ul {
+  padding-left: 1.25rem;
+}
+
+.post-date {
+  color: #5c6370;
+  margin-right: 0.75rem;
+}
+
+/* Pagination under the recent-posts column */
+.pagination {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pagination-info {
+  color: #5c6370;
+}
+
+@media (max-width: 900px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .home-posts {
+    border-left: none;
+    border-right: none;
+    padding: 0;
+  }
+}
+
 /* One Dark palette override: replaces the theme's invert-based dark mode. */
 body[a="dark"] {
   filter: none;
