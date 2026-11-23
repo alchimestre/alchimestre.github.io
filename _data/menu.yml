@@ -1,15 +1,17 @@
 entries:
-  - title: links
+  - title: Links
     entries:
       - title: Instagram
-        url: https://instagram.com/_ethesthete
+        url: https://instagram.com/_alchimestre
       - title: SoundCloud
         url: https://soundcloud.com/alchimestre
       - title: GitHub
         url: https://github.com/alchimestre
+      - title: LinkedIn
+        url: https://www.linkedin.com/in/vincent-loupmon-180ab8196/
 
-  - title: all posts
+  - title: All posts
     post_list: true
 
-  - title: rss
+  - title: RSS
     url: feed.xml

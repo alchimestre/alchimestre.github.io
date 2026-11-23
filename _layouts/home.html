@@ -1,11 +1,12 @@
 ---
 layout: default
 ---
-<header>
+<header class="home-header">
   <h1>{{ site.title }}</h1>
   {%- if site.theme_config.show_description -%}
     <p>{{ site.description }}</p>
   {%- endif -%}
+  <div class="timeline" aria-hidden="true"></div>
 </header>
 
 <div class="home-grid">
@@ -28,15 +29,14 @@ layout: default
   </nav>
 
   <section class="home-col home-posts" aria-label="Recent posts">
-    <h2>recent posts</h2>
-    <ul class="post-list">
-      {%- for post in paginator.posts -%}
-        <li>
-          <span class="post-date">{{ post.date | date: site.theme_config.date_format }}</span>
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </li>
-      {%- endfor -%}
-    </ul>
+    <h2>Recent posts</h2>
+    {%- for post in paginator.posts -%}
+      <article class="home-post">
+        <time class="post-meta" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: site.theme_config.date_format }}</time>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        {{ post.content }}
+      </article>
+    {%- endfor -%}
 
     {%- if paginator.total_pages > 1 -%}
       <nav class="pagination" aria-label="Pagination">
